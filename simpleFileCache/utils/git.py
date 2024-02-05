@@ -25,7 +25,7 @@ def extract_github_url(url : str):
 @cache
 def meta_repo(url : str):
     meta = extract_github_url(url)
-    return f"{meta["id"]}/{meta['name']}"
+    return f"{meta['id']}/{meta['name']}"
 
 @cache
 def meta_filename(url : str):
