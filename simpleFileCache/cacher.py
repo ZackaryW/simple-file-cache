@@ -191,7 +191,7 @@ class Cacher:
         if res.status_code != 200:
             raise RuntimeError(f"failed to fetch {path}")
         
-        checksum = hash_file(res.content)
+        checksum = hash_bytes(res.content)
         newEntry(
             self.__cacheDict,
             path,
@@ -203,6 +203,7 @@ class Cacher:
         with open(os.path.join(self.__cacheFolder, checksum), "wb") as f:
             f.write(res.content)
 
+        return self.cacheFileFetch(path)
     
     def item_gitraw_permanent(self, path : str):
         return self.item_gitraw(path, updatableInterval=None)

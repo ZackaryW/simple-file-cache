@@ -74,8 +74,11 @@ class CacheIndexDict(SioWrapper):
             self.privateKey, self.publicKey = init_keyring()
         else:
             self.privateKey, self.publicKey = init_directInput(privateKey)
+        self.clearMethod = self._clear
+        self.saveMethod = self.save
+        self.loadMethod = self.load
         super().__init__(path, *args, **kwargs)
-    
+        
 
     @staticmethod
     def _clear(path : str):
@@ -97,6 +100,7 @@ class CacheIndexDict(SioWrapper):
         if not crypt.verify_signed_data(path, self.publicKey):
             raise RuntimeError(f"Index {path} is tampered")
         
+        self.clear()
         self.update(crypt.verify_signed_data.get_last())
         
 def newEntry( 
@@ -119,4 +123,4 @@ def newEntry(
         lastCommitted = lastCommitted
     )
     entry = {k : v for k, v in entry.items() if v is not None}
-    d.setDeep("cache", key, entry)
+    d[key] = entry
