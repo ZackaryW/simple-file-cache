@@ -2,9 +2,9 @@ from setuptools import setup
 
 setup(
     name='simpleFileCache24',
-    version='1.0.1',
+    version='1.1.0',
     author='zackaryW',
-    install_requires=['cryptography', 'keyring', 'requests', 'sioDict'],
+    install_requires=['cryptography', 'keyring', 'requests', 'sioDict>=0.3.2'],
     packages=[
         'simpleFileCache',
         'simpleFileCache.utils',
