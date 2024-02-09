@@ -267,3 +267,11 @@ class Cacher:
             if not ignoreErrors:
                 raise
     
+    def pruneCache(self):
+        existingChecksums = set()
+        for path in self.__cacheDict:
+            existingChecksums.add(self.__cacheDict[path].get("checksum"))
+        
+        for checksum in os.listdir(self.__cacheFolder):
+            if checksum not in existingChecksums:
+                os.remove(os.path.join(self.__cacheFolder, checksum))
